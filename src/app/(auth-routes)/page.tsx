@@ -1,9 +1,11 @@
 "use client"; //funciona como client component - p/ trablhar com states(estados) do react
 
 import Button from "@/components/Button";
+import { getServerSession } from "next-auth";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { SyntheticEvent, useState } from "react";
+import { nextAuthOptions } from "../api/auth/[...nextauth]/route";
 
 export default function Home() {
   //
@@ -24,11 +26,16 @@ export default function Home() {
     });
 
     if (result?.error) {
-      console.log(result);
+      //se houver erro
+      alert("Erro ao fazer login"); //exibe um alerta
       return;
     }
 
-    router.replace("/admin"); // caso faça o login redireciona para o /admin e quando clicar em "voltar" não volta mais para a pag de login; inicia um hostórico novo
+    const session = await getServerSession(nextAuthOptions)
+    
+    localStorage.setItem('session', JSON.stringify(session))
+
+    router.replace("/customers"); // caso faça o login redireciona para o /admin e quando clicar em "voltar" não volta mais para a pag de login; inicia um hostórico novo
   }
 
   return (

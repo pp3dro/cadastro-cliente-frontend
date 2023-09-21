@@ -11,7 +11,7 @@ export default async function PrivateLayout({ children }: PrivateLayoutProps) {
   const session = await getServerSession(nextAuthOptions); //obter a sessao do lado do servidor (verificar antes de renderizar se o usuario tem sessao ativa ou não)
 
   if (session) {
-    redirect('/admin');
+    redirect('/customers');
   }
 
   return <>{children}</>
