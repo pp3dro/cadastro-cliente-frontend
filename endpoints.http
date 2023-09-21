@@ -1,0 +1,10 @@
+POST http://localhost:8000/oauth/token
+Content-Type: application/json
+
+{
+    "grant_type": "password",
+    "username": "support@support.com",
+    "password": "Eab10dee0!",
+    "client_id": "993eec8c-a14b-4f07-87da-b3fd0ebb90be",
+    "client_secret": "gwjerddlLHX9E7ktpXk5SANl7wAqmFCgLnoKnBTw"
+}
