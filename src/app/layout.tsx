@@ -1,7 +1,6 @@
-import NextAuthSessionProvider from "@/providers/sessionProvider";
+import { NextUIProvider } from "@nextui-org/react";
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className="bg-gray-800 text-white">
-        <NextAuthSessionProvider>{children}</NextAuthSessionProvider>
+        <NextUIProvider>{children}</NextUIProvider>
       </body>
     </html>
   );

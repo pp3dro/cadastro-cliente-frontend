@@ -1,31 +1,21 @@
+import { isAuthenticated, UserData, getUser } from "@/utils/login";
 import axios, { AxiosRequestConfig } from "axios";
 
-interface UserData {
-    //
-    id: string;
-    name: string;
-    email: string;
-    token: {
-      token_type: string;
-      expires_in: number;
-      access_token: string;
-      refresh_token: string;
-    };
+const axiosInstance = axios.create({
+  baseURL: "http://localhost:8000/",
+  timeout: 1000,
+  headers: { Accept: "application/json", "Content-Type": "application/json" },
+});
+
+axiosInstance.interceptors.request.use((config) => {
+  if (isAuthenticated()) {
+    const user = getUser();
+    config.headers[
+      "Authorization"
+    ] = `${user.token.token_type} ${user.token.access_token}`;
+    return config;
   }
+  return config;
+});
 
-const config: AxiosRequestConfig = {
-    baseURL: "http://localhost:8000/api/",
-    timeout: 1000,
-    };
-
-const sessionJson = localStorage.getItem('session');
-
-const session: UserData | null | undefined  = JSON.parse(sessionJson ?? '{}' );
-
-if (sessionJson && session && session?.token) {
-    config.headers = { Authorization: `${session.token.token_type} ${session.token.access_token}` };
-}
-
-const instance = axios.create(config);
-
-export default instance;
+export default axiosInstance;

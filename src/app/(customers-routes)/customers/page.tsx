@@ -1,35 +1,27 @@
-'use client'
+"use client";
 
 import ButtonLogout from "@/components/ButtonLogout";
 import { useEffect, useState } from "react";
-import axios from "@/config/axios"; 
-import { Customer } from "@/types/next-auth";
-
+import { Customer as CustomerType, getCustomers } from "../customers";
 
 export default function Customer() {
-
-  const [customers, setCustomers] = useState<typeof Customer[]>([]);
+  const [customers, setCustomers] = useState<CustomerType[]>([]);
 
   useEffect(() => {
-    axios.get('customers')
-      .then((response): Customer => console.log(response.data))
-      .catch((error) => console.error(error));
+    getCustomers().then((c) => setCustomers(c));
   }, []);
 
   return (
-    // <div className="flex flex-col items-center justify-center w-full h-screen">
-    //   <h1 className="text-3xl mb-6">Customers</h1>
+    <>
+    <header>
+      <div className="">
 
-    //   <div className="w-[400px] flex flex-col gap-6">
-    //     {customers.map((customer) => (
-    //       <div key={customer.id} className="flex flex-col gap-2">
-    //         <span>Nome: {customer.name}</span>
-    //         <span>Email: {customer.email}</span>
-    //         <span>Telefone: {customer.phone}</span>
-    //       </div>
-    //     ))}
-      <div>
-      <ButtonLogout> Sair </ButtonLogout>
-    </div>
+      </div>
+    </header>
+    <div className="flex flex-col items-center justify-center w-full h-screen">
+        <h1 className="text-3xl mb-6">Clientes</h1>
+        
+      </div>
+  </>    
   );
 }

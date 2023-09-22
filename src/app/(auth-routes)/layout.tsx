@@ -1,16 +1,16 @@
-import { getServerSession } from "next-auth";
+'use client';
+
 import { ReactNode } from "react";
-import { nextAuthOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
+import { isAuthenticated } from "@/utils/login"
 
 interface PrivateLayoutProps {
   children: ReactNode;
 }
 
-export default async function PrivateLayout({ children }: PrivateLayoutProps) {
-  const session = await getServerSession(nextAuthOptions); //obter a sessao do lado do servidor (verificar antes de renderizar se o usuario tem sessao ativa ou não)
+export default function PrivateLayout({ children }: PrivateLayoutProps) {
 
-  if (session) {
+  if (isAuthenticated()) {
     redirect('/customers');
   }
 
