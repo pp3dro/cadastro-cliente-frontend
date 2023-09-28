@@ -49,8 +49,6 @@ export async function login(username: string, password: string) {
     console.log(e)
     return null
   }
-  
-  return null;
 }
 
 export function logout() {
@@ -58,6 +56,10 @@ export function logout() {
 }
 
 export const getUser = (): UserData => {
+  if (typeof window === 'undefined') {
+    return {} as UserData
+  }
+  
   const sessionJson = localStorage.getItem('session');
 
   const session: UserData  = JSON.parse(sessionJson ?? '{}' );
